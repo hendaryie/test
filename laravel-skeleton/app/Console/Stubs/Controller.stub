@@ -1,0 +1,57 @@
+<?php
+namespace DummyNamespace;
+
+use DummyCoreNamespace\Controllers\Controller;
+use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+
+class DummyClassController extends Controller
+{
+    private $dummy_classService;
+
+    public function __construct(DummyClassServiceInterface $dummy_classService)
+    {
+        $this->dummy_classService = $dummy_classService;
+    }
+
+    public function index()
+    {
+        return view('welcome');
+    }
+
+    public function show($dummy_classId)
+    {
+        $response = $this->dummy_classService->getDummyClass($dummy_classId);
+
+        return $response;
+    }
+
+    public function store(Request $request)
+    {
+        $data = $request->only([
+            // TODO: Apply selected data here
+        ]);
+
+        $response = $this->dummy_classService->store($data);
+
+        return $response;
+    }
+
+    public function update($dummy_classId, Request $request)
+    {
+        $data = $request->only([
+            // TODO: Apply selected data here
+        ]);
+
+        $response = $this->dummy_classService->update($dummy_classId, $data);
+
+        return $response;
+    }
+
+    public function destroy($dummy_classId)
+    {
+        $response = $this->dummy_classService->destroy($dummy_classId);
+
+        return $response;
+    }
+}

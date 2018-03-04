@@ -1,0 +1,15 @@
+<?php
+namespace DummyNamespace;
+
+interface DummyClassServiceInterface
+{
+    public function getDummyClasses();
+
+    public function getDummyClass($dummy_classId);
+
+    public function store(array $data);
+
+    public function update($dummy_classId, array $data);
+
+    public function destroy($dummy_classId);
+}

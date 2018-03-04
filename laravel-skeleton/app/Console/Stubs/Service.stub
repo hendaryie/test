@@ -1,0 +1,89 @@
+<?php
+namespace DummyNamespace;
+
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\DB;
+
+use DummyCoreNamespace\Exceptions\ValidationException;
+use DummyCoreNamespace\Services\Service;
+
+class DummyClassService extends Service implements DummyClassServiceInterface
+{
+    private $dummy_classRepository;
+
+    public function __construct(DummyClassRepositoryInterface $dummy_classRepository)
+    {
+        $this->dummy_classRepository = $dummy_classRepository;
+    }
+
+    private function storeValidator(array $data)
+    {
+        $validator = Validator::make($data, [
+            // TODO: Add store validator here
+        ]);
+
+        return $validator;
+    }
+
+    private function updateValidator(array $data)
+    {
+        $validator = Validator::make($data, [
+            // TODO: Add update validator here
+        ]);
+
+        return $validator;
+    }
+
+    public function getDummyClasses()
+    {
+        $dummy_classes = $this->dummy_classRepository->getDummyClasses();
+
+        return $this->wrapResponse($dummy_classes);
+    }
+
+    public function getDummyClass($dummy_classId)
+    {
+        $dummy_class = $this->dummy_classRepository->getSpecificDummyClass($dummy_classId);
+
+        return $this->wrapResponse($dummy_class);
+    }
+
+    public function store(array $data)
+    {
+        $validator = $this->storeValidator($data);
+
+        if($validator->fails()) {
+            throw new ValidationException($validator);
+        }
+
+        $response = DB::transaction(function () use ($data) {
+            // TODO: Apply store logic here
+        });
+
+        return $this->wrapResponse($response);
+    }
+
+    public function update($dummy_classId, array $data)
+    {
+        $validator = $this->updateValidator($data);
+
+        if($validator->fails()) {
+            throw new ValidationException($validator);
+        }
+
+        $response = DB::transaction(function () use ($dummy_classId, $data) {
+            // TODO: Apply update logic here
+        });
+
+        return $this->wrapResponse($response);
+    }
+
+    public function destroy($dummy_classId)
+    {
+        $response = DB::transaction(function () use ($dummy_classId) {
+            // TODO: Apply destroy logic here
+        });
+
+        return $response;
+    }
+}

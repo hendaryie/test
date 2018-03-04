@@ -1,0 +1,66 @@
+<?php
+namespace DummyNamespace;
+
+use DummyCoreNamespace\Exceptions\ResourceConflictException;
+use DummyCoreNamespace\Exceptions\ResourceNotFoundException;
+use DummyCoreNamespace\Repositories\Repository;
+use DummyCoreNamespace\Models\DummyClass;
+
+class DummyClassRepository extends Repository implements DummyClassRepositoryInterface
+{
+    private $dummy_class;
+
+    public function __construct(DummyClass $dummy_class)
+    {
+        $this->dummy_class = $dummy_class;
+    }
+
+    public function getDummyClasses()
+    {
+        return $this->dummy_class->all();
+    }
+
+    public function getDummyClass($dummy_classId)
+    {
+        return $this->dummy_class->find($dummy_classId);
+    }
+
+    public function store(array $data)
+    {
+        $dummy_class = new DummyClass();
+
+        if ($dummy_class) {
+            throw new ResourceConflictException(DummyClass::MODEL_NAME);
+        }
+
+        // TODO: Apply store logic here
+
+        return $this->getSpecificDummyClass($data['id']);
+    }
+
+    public function update($dummy_classId, array $data)
+    {
+        $dummy_class = $this->dummy_class->find($dummy_classId);
+
+        if ($dummy_class) {
+            throw new ResourceNotFoundException(DummyClass::MODEL_NAME);
+        }
+
+        // TODO: Apply update logic here
+
+        return $this->getSpecificDummyClass($dummy_classId);
+    }
+
+    public function destroy($dummy_classId)
+    {
+        $dummy_class = $this->dummy_class->find($dummy_classId);
+
+        if ($dummy_class) {
+            throw new ResourceNotFoundException(DummyClass::MODEL_NAME);
+        }
+
+        // TODO: Apply destroy logic here
+
+        return null;
+    }
+}

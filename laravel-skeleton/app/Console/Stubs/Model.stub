@@ -1,0 +1,12 @@
+<?php
+
+namespace DummyNamespace;
+
+use Illuminate\Database\Eloquent\Model;
+
+class DummyClass extends Model
+{
+    protected $hidden = ['created_at', 'deleted_at'];
+
+    const MODEL_NAME = 'DummyClass';
+}
